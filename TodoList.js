@@ -6,8 +6,10 @@ import {
   StyleSheet,
   TextInput,
   Button,
-  ListView
+  ListView,
+  TouchableOpacity
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const DOMAIN = 'http://localhost:3000';
 const USERNAME = 'React-Native';
@@ -98,13 +100,14 @@ export default class App extends Component {
             return (
               <View style={styles.todoItem}>
                 <Text style={styles.todoText}>{item.title}</Text>
-                <Button
-                  title="Delete"
+                <TouchableOpacity
                   onPress={() => {
                     this._handleDeleteButtonPress(item.id);
                   }}
                   style={styles.deleteButton}
-                />
+                >
+                  <Icon name="ios-trash" color="red" size={30} />
+                </TouchableOpacity>
               </View>
             );
           }}
