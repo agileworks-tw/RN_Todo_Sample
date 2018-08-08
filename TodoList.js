@@ -83,6 +83,9 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style={styles.greeting}>{`${
+          this.props.username
+        }, 寫下想做的事情吧`}</Text>
         <View style={styles.formView}>
           <TextInput
             style={styles.inputForm}
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 40,
+    paddingTop: 0,
     backgroundColor: '#eee'
   },
   formView: {
@@ -144,11 +147,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1.5,
     borderColor: '#e0e0e0',
     backgroundColor: '#fff',
-    // border: '1 solid #333',
     flex: 1,
     flexDirection: 'row'
   },
   todoText: {
     flex: 1
+  },
+  greeting: {
+    padding: 20,
+    color: '#555'
   }
 });
