@@ -6,40 +6,74 @@ import {
   StyleSheet,
   TextInput,
   Button,
-  ListView,
+  ListView
 } from 'react-native';
-// import { Constants } from 'expo';
+
+const DOMAIN = 'http://localhost:3000';
+const USERNAME = 'React-Native';
 
 export default class App extends Component {
   state = {
     inputValue: '',
-    todoList: [],
+    todoList: []
   };
 
+  async componentDidMount() {
+    const res = await fetch(`${DOMAIN}/api/users/${USERNAME}/tasks`);
+    const result = await res.json();
+    this.setState({ todoList: result.tasks });
+  }
+
   _handleTextChange = value => {
+    console.log('change');
     const inputValue = value;
     this.setState(() => ({
-      inputValue,
+      inputValue
     }));
   };
 
-  _handleSendButtonPress = () => {
+  _handleSendButtonPress = async () => {
     if (!this.state.inputValue) {
       return;
     }
-    this.setState(prevState => ({
-      todoList: [...prevState.todoList, this.state.inputValue],
-      inputValue: '',
-    }));
+
+    const data = {
+      title: this.state.inputValue,
+      completed: false
+    };
+
+    const res = await fetch(`${DOMAIN}/api/users/${USERNAME}/tasks/create`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    this.setState(
+      prevState => ({ todoList: [...prevState.todoList, result.task] }),
+      () => {
+        this.setState({ inputValue: null });
+      }
+    );
   };
 
-  _handleDeleteButtonPress = id => {
+  _handleDeleteButtonPress = async id => {
+    const res = await fetch(`${DOMAIN}/api/task/${id}`, {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const result = await res.json();
+    console.log('result', result);
+    // this.setState(prevState => ({ todoList: [...prevState.todoList, result.task ]}));
     this.setState(prevState => {
       const todoList = prevState.todoList.filter(
-        (item, i) => parseInt(id) !== i
+        (item, i) => `${id}` !== `${item.id}`
       );
       return {
-        todoList,
+        todoList
       };
     });
   };
@@ -59,14 +93,15 @@ export default class App extends Component {
         <FlatList
           data={this.state.todoList}
           style={styles.listView}
+          keyExtractor={item => `${item.id}`}
           renderItem={({ item, index }) => {
             return (
               <View style={styles.todoItem}>
-                <Text style={styles.todoText}>{item}</Text>
+                <Text style={styles.todoText}>{item.title}</Text>
                 <Button
                   title="Delete"
                   onPress={() => {
-                    this._handleDeleteButtonPress(index);
+                    this._handleDeleteButtonPress(item.id);
                   }}
                   style={styles.deleteButton}
                 />
@@ -85,19 +120,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 40,
-    backgroundColor: '#eee',
+    backgroundColor: '#eee'
   },
   formView: {
     borderBottomWidth: 1,
     borderColor: '#ccc',
-    paddingBottom: 8,
+    paddingBottom: 8
   },
   inputForm: {
     backgroundColor: '#fff',
     width: 320,
     height: 40,
     padding: 8,
-    marginBottom: 8,
+    marginBottom: 8
   },
   todoItem: {
     alignItems: 'center',
@@ -106,11 +141,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1.5,
     borderColor: '#e0e0e0',
     backgroundColor: '#fff',
-    // border: '1 solid #333', 
+    // border: '1 solid #333',
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   todoText: {
-    flex: 1,
-  },
+    flex: 1
+  }
 });
