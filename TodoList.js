@@ -12,7 +12,6 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const DOMAIN = 'http://localhost:3000';
-const USERNAME = 'React-Native';
 
 export default class App extends Component {
   state = {
@@ -21,7 +20,7 @@ export default class App extends Component {
   };
 
   async componentDidMount() {
-    const res = await fetch(`${DOMAIN}/api/users/${USERNAME}/tasks`);
+    const res = await fetch(`${DOMAIN}/api/users/${this.props.username}/tasks`);
     const result = await res.json();
     this.setState({ todoList: result.tasks });
   }
@@ -44,7 +43,7 @@ export default class App extends Component {
       completed: false
     };
 
-    const res = await fetch(`${DOMAIN}/api/users/${USERNAME}/tasks/create`, {
+    const res = await fetch(`${DOMAIN}/api/users/${this.props.username}/tasks/create`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
