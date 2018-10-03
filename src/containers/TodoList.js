@@ -8,11 +8,18 @@ import {
   Button,
   ListView
 } from 'react-native';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {
+  recvTodoList,
+  deleteToDo,
+  addToDo
+} from '../actions/todoList';
 
 const DOMAIN = 'http://localhost:3000';
 const USERNAME = 'React-Native';
 
-export default class App extends Component {
+class ToDoList extends Component {
   state = {
     inputValue: '',
     todoList: []
@@ -21,7 +28,7 @@ export default class App extends Component {
   async componentDidMount() {
     const res = await fetch(`${DOMAIN}/api/users/${USERNAME}/tasks`);
     const result = await res.json();
-    this.setState({ todoList: result.tasks });
+    this.props.recvTodoList(result.tasks);
   }
 
   _handleTextChange = value => {
@@ -50,12 +57,8 @@ export default class App extends Component {
       body: JSON.stringify(data)
     });
     const result = await res.json();
-    this.setState(
-      prevState => ({ todoList: [...prevState.todoList, result.task] }),
-      () => {
-        this.setState({ inputValue: null });
-      }
-    );
+    this.props.addToDo(result.task);
+    this.setState({ inputValue: null });
   };
 
   _handleDeleteButtonPress = async id => {
@@ -66,16 +69,7 @@ export default class App extends Component {
       }
     });
     const result = await res.json();
-    console.log('result', result);
-    // this.setState(prevState => ({ todoList: [...prevState.todoList, result.task ]}));
-    this.setState(prevState => {
-      const todoList = prevState.todoList.filter(
-        (item, i) => `${id}` !== `${item.id}`
-      );
-      return {
-        todoList
-      };
-    });
+    this.props.deleteToDo(result.task);
   };
 
   render() {
@@ -149,3 +143,14 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+export default connect(
+  state => ({
+    todoList: state.todoList
+  }),
+  dispatch => bindActionCreators({
+    recvTodoList,
+    deleteToDo,
+    addToDo
+  }, dispatch)
+)(ToDoList)
