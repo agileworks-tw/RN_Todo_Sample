@@ -6,14 +6,13 @@ import {
   StyleSheet,
   TextInput,
   Button,
-  ListView,
 } from 'react-native';
-// import { Constants } from 'expo';
+import ListItem from './ListItem';
 
 export default class App extends Component {
   state = {
     inputValue: '',
-    todoList: [],
+    todoList: []
   };
 
   _handleTextChange = value => {
@@ -61,18 +60,10 @@ export default class App extends Component {
           style={styles.listView}
           renderItem={({ item, index }) => {
             return (
-              <View style={styles.todoItem}>
-                <Text style={styles.todoText}>{item}</Text>
-                <Button
-                  title="Delete"
-                  onPress={() => {
-                    this._handleDeleteButtonPress(index);
-                  }}
-                  style={styles.deleteButton}
-                />
-              </View>
+              <ListItem item={item} />
             );
           }}
+          scrollEnabled={this.state.enableScrolling}
         />
       </View>
     );
@@ -98,19 +89,5 @@ const styles = StyleSheet.create({
     height: 40,
     padding: 8,
     marginBottom: 8,
-  },
-  todoItem: {
-    alignItems: 'center',
-    padding: 8,
-    width: 320,
-    borderBottomWidth: 1.5,
-    borderColor: '#e0e0e0',
-    backgroundColor: '#fff',
-    // border: '1 solid #333', 
-    flex: 1,
-    flexDirection: 'row',
-  },
-  todoText: {
-    flex: 1,
   },
 });
