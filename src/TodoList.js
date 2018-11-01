@@ -1,24 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   FlatList,
   Text,
   View,
   StyleSheet,
   TextInput,
-  Button,
-} from 'react-native';
-import ListItem from './ListItem';
+  Button
+} from "react-native";
+import ListItem from "./ListItem";
 
 export default class App extends Component {
   state = {
-    inputValue: '',
-    todoList: []
+    inputValue: "",
+    todoList: [],
+    enableScrolling: true
   };
 
   _handleTextChange = value => {
     const inputValue = value;
     this.setState(() => ({
-      inputValue,
+      inputValue
     }));
   };
 
@@ -28,19 +29,25 @@ export default class App extends Component {
     }
     this.setState(prevState => ({
       todoList: [...prevState.todoList, this.state.inputValue],
-      inputValue: '',
+      inputValue: ""
     }));
   };
 
   _handleDeleteButtonPress = id => {
+    console.log(this.state.todoList);
     this.setState(prevState => {
       const todoList = prevState.todoList.filter(
         (item, i) => parseInt(id) !== i
       );
+      console.log("after", todoList);
       return {
-        todoList,
+        todoList
       };
     });
+  };
+
+  setEnableScrolling = status => {
+    this.setState({ enableScrolling: status });
   };
 
   render() {
@@ -58,11 +65,17 @@ export default class App extends Component {
         <FlatList
           data={this.state.todoList}
           style={styles.listView}
-          renderItem={({ item, index }) => {
-            return (
-              <ListItem item={item} />
-            );
-          }}
+          renderItem={({ item, index }) => (
+            <ListItem
+              item={item}
+              delete={() => {
+                console.log(index);
+                this._handleDeleteButtonPress(index);
+              }}
+              setEnableScrolling={this.setEnableScrolling}
+            />
+          )}
+          keyExtractor={(item, index) => `${item}`}
           scrollEnabled={this.state.enableScrolling}
         />
       </View>
@@ -73,21 +86,24 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingTop: 40,
-    backgroundColor: '#eee',
+    backgroundColor: "#eee"
   },
   formView: {
     borderBottomWidth: 1,
-    borderColor: '#ccc',
-    paddingBottom: 8,
+    borderColor: "#ccc",
+    paddingBottom: 8
   },
   inputForm: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     width: 320,
     height: 40,
     padding: 8,
-    marginBottom: 8,
+    marginBottom: 8
   },
+  listView: {
+    // backgroundColor: 'blue'
+  }
 });
