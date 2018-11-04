@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { RNCamera, FaceDetector } from "react-native-camera";
-
-export default class Video extends Component {
+import Video from "react-native-video";
+export default class VideoScreen extends Component {
   state = {
-    recording: false
+    recording: false,
+    recordVideo: null
   };
 
   handleRecord = async () => {
@@ -22,6 +23,7 @@ export default class Video extends Component {
       const recordVideo = await this.camera.recordAsync();
       this.setState({ recording: false });
       console.log(recordVideo);
+      this.setState({ recordVideo });
     }
   };
 
@@ -29,8 +31,31 @@ export default class Video extends Component {
     this.camera.stopRecording();
   };
 
+  reset = () => {
+    this.setState({
+      recordVideo: null
+    });
+  };
+
   render() {
-    return (
+    return this.state.recordVideo ? (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Video
+          source={{
+            uri: this.state.recordVideo.uri
+          }} // Can be a URL or a local file.
+          ref={ref => {
+            this.player = ref;
+          }} // Store reference
+          onBuffer={this.onBuffer} // Callback when remote video is buffering
+          onError={this.videoError} // Callback when video cannot be loaded
+          style={styles.backgroundVideo}
+        />
+        <TouchableOpacity onPress={this.reset}>
+          <Text style={{ fontSize: 22 }}>Back</Text>
+        </TouchableOpacity>
+      </View>
+    ) : (
       <View style={styles.container}>
         <RNCamera
           ref={ref => {
@@ -48,7 +73,11 @@ export default class Video extends Component {
           }}
         />
         <View
-          style={{ flex: 0, flexDirection: "row", justifyContent: "center" }}
+          style={{
+            flex: 0,
+            flexDirection: "row",
+            justifyContent: "center"
+          }}
         >
           <TouchableOpacity onPress={this.handleRecord} style={styles.capture}>
             <Text style={{ fontSize: 14 }}>
@@ -80,5 +109,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignSelf: "center",
     margin: 20
+  },
+  backgroundVideo: {
+    height: "80%",
+    width: "100%"
   }
 });
