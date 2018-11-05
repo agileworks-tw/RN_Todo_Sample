@@ -1,0 +1,30 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '9.0'
+
+target 'RN_Todo_Sample' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for RN_Todo_Sample
+  # Required by RNFirebase
+  pod 'Firebase/Core', '~> 5.9.0'
+
+  target 'RN_Todo_SampleTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
+
+target 'RN_Todo_Sample-tvOS' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for RN_Todo_Sample-tvOS
+
+  target 'RN_Todo_Sample-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

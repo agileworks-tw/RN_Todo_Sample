@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>845604112981-gk9og76hdhjoe2epc543fc7o2t4qub07.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.845604112981-gk9og76hdhjoe2epc543fc7o2t4qub07</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDoRowTZ8gmEnq19QA-Y0z8saWlVsvfCsM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>845604112981</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.RN-Todo-Sample</string>
+	<key>PROJECT_ID</key>
+	<string>agileworks-todo-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>agileworks-todo-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:845604112981:ios:9b217f312818a662</string>
+	<key>DATABASE_URL</key>
+	<string>https://agileworks-todo-app.firebaseio.com</string>
+</dict>
+</plist>
