@@ -8,6 +8,8 @@ target 'RN_Todo_Sample' do
   # Pods for RN_Todo_Sample
   # Required by RNFirebase
   pod 'Firebase/Core', '~> 5.9.0'
+  pod 'Firebase/Messaging', '~> 5.9.0'
+  pod 'GoogleAppMeasurement', '~> 5.2.0'
 
   target 'RN_Todo_SampleTests' do
     inherit! :search_paths
