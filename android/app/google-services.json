@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "845604112981",
+    "firebase_url": "https://agileworks-todo-app.firebaseio.com",
+    "project_id": "agileworks-todo-app",
+    "storage_bucket": "agileworks-todo-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845604112981:android:c625ba133d8c4141",
+        "android_client_info": {
+          "package_name": "com.rn_todo_sample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "845604112981-lvku943hk6iq3l86oq6vbi4ga53oifos.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRY94B_sUkS1qLgO08wymfkHNP9HeKZL4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
