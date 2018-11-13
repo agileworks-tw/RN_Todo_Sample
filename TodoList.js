@@ -7,12 +7,12 @@ import {
   TextInput,
   Button,
   ListView,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const DOMAIN = 'http://localhost:3000';
-const USERNAME = 'React-Native';
 
 export default class App extends Component {
   state = {
@@ -21,7 +21,12 @@ export default class App extends Component {
   };
 
   async componentDidMount() {
-    const res = await fetch(`${DOMAIN}/api/users/${USERNAME}/tasks`);
+    this.jwtToken = await AsyncStorage.getItem('JWT_TOKEN');
+    const res = await fetch(`${DOMAIN}/api/users/${this.props.username}/tasks`, {
+      headers: {
+        Authorization: `Bear ${this.jwtToken}`
+      }
+    });
     const result = await res.json();
     this.setState({ todoList: result.tasks });
   }
@@ -44,9 +49,10 @@ export default class App extends Component {
       completed: false
     };
 
-    const res = await fetch(`${DOMAIN}/api/users/${USERNAME}/tasks/create`, {
+    const res = await fetch(`${DOMAIN}/api/users/${this.props.username}/tasks/create`, {
       method: 'post',
       headers: {
+        Authorization: `Bear ${this.jwtToken}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
@@ -64,6 +70,7 @@ export default class App extends Component {
     const res = await fetch(`${DOMAIN}/api/task/${id}`, {
       method: 'delete',
       headers: {
+        Authorization: `Bear ${this.jwtToken}`,
         'Content-Type': 'application/json'
       }
     });
