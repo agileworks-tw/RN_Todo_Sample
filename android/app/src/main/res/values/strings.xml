@@ -1,3 +1,4 @@
 <resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">4lw-yra5Td6wdhpE4du0zgyjkRGLrybxuKe4UG</string>
     <string name="app_name">RN_Todo_Sample</string>
 </resources>
