@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
-import { StyleSheet, Button, Text, TextInput, View } from 'react-native';
+import {
+  AsyncStorage,
+  StyleSheet,
+  Button,
+  Text,
+  TextInput,
+  View
+} from 'react-native';
 import { Actions } from 'react-native-router-flux';
+const USERNAME = 'USERNAME';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,19 +38,31 @@ export default class SignIn extends Component {
     console.log('text', text);
   };
 
-  signIn = () => {
-    Actions.todoList({ username: this.state.username, title: `Hi, ${this.state.username}` });
+  async componentDidMount() {
+    const username = await AsyncStorage.getItem(USERNAME);
+    if (username) {
+      this.setState({ username });
+    }
+  }
+
+  signIn = async () => {
+    await AsyncStorage.setItem(USERNAME, this.state.username);
+    Actions.todoList({
+      username: this.state.username,
+      title: `Hi, ${this.state.username}`
+    });
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <TextInput placeholder="Username" value={this.state.username} style={styles.input} onChangeText={this.onChangeText} />
-        <Button
-          onPress={this.signIn}
-          title="登入"
-          color="blue"
+        <TextInput
+          placeholder="Username"
+          value={this.state.username}
+          style={styles.input}
+          onChangeText={this.onChangeText}
         />
+        <Button onPress={this.signIn} title="登入" color="blue" />
       </View>
     );
   }
